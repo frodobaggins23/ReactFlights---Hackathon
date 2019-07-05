@@ -79,7 +79,9 @@ class App extends Component {
           changeToDirect={this.changeToDirect}
         />
         {this.state.isLoading ? (
-          <div>Loading</div>
+          <div className="loading">
+            <h2>Loading...</h2>
+          </div>
         ) : (
           <FlightResultsTable
             results={this.state.flightResults}
@@ -87,6 +89,7 @@ class App extends Component {
           />
         )}
         <button
+          className="showMore"
           onClick={this.showNextPage}
           disabled={this.state.pagination >= this.state.flightResults.length}
         >
