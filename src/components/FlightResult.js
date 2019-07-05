@@ -7,6 +7,7 @@ const FlightResult = ({
   dTime,
   aTime,
   price,
+  stopovers,
   flightNo
 }) => {
   return (
@@ -22,6 +23,7 @@ const FlightResult = ({
         Arrives at:
         {DateTime.fromMillis(aTime * 1000).toFormat("dd-LL-yyyy hh:mm")}
       </div>
+      <div>Number of stopovers:{stopovers > 0 ? stopovers : "direct"}</div>
       <div>Price:{price}</div>
     </div>
   );

@@ -31,3 +31,49 @@
     transform: rotate(360deg);
   }
 }
+
+.FlightContainer {
+  width: 90%;
+  margin: 0 auto;
+  background-color: sandybrown;
+}
+
+nav {
+  background-color: gray;
+  display: flex;
+  justify-content: flex-start;
+  height: 7vh;
+}
+
+nav div {
+  margin-left: 1rem;
+  font-size: 2rem;
+}
+nav i {
+  height: 60px;
+  color: sandybrown;
+}
+
+.FlightFinder {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  background-color: white;
+  border: 1px solid gray;
+}
+
+.FlightFinder .origin,
+.FlightFinder .destination {
+  flex: 1 1 50%;
+}
+
+.FlightFinder .buttons {
+  flex: 1 1 100%;
+  text-align: center;
+}
+
+.FlightFinder .buttons input {
+  margin: 0 1rem;
+}

@@ -1,8 +1,8 @@
-import React, { Component } from "react"
-import "./App.css"
-import Navbar from "./components/Navbar.js"
-import FlightResultsTable from "./components/FlightResultsTable.js"
-import FlightFinder from "./components/FlightFinder.js"
+import React, { Component } from "react";
+import "./App.css";
+import Navbar from "./components/Navbar.js";
+import FlightResultsTable from "./components/FlightResultsTable.js";
+import FlightFinder from "./components/FlightFinder.js";
 
 class App extends Component {
   state = {
@@ -16,49 +16,63 @@ class App extends Component {
       partner: "picky",
       limit: "5"
     }
-  }
+  };
   componentDidMount() {
-    this.fetchFlights()
+    this.fetchFlights();
   }
 
   fetchFlights = () => {
-    this.setState({ isLoading: true })
+    this.setState({ isLoading: true });
 
-    const flightUrl = new URL("https://api.skypicker.com/flights?")
-    const { params } = this.state
+    const flightUrl = new URL("https://api.skypicker.com/flights?");
+    const { params } = this.state;
 
-    flightUrl.search = new URLSearchParams(params)
+    flightUrl.search = new URLSearchParams(params);
     fetch(flightUrl)
       .then(response => response.json())
       .then(data => {
-        this.setState({ isLoading: false, flightResults: data.data })
-      })
-  }
+        this.setState({ isLoading: false, flightResults: data.data });
+      });
+  };
 
   changeSource = e => {
-    const { target } = e
+    const { target } = e;
 
     this.setState(prevState => ({
       params: { ...prevState.params, flyFrom: target.value }
-    }))
-  }
+    }));
+  };
 
   changeDestination = e => {
-    const { target } = e
+    const { target } = e;
 
     this.setState(prevState => ({
       params: { ...prevState.params, to: target.value }
-    }))
-  }
+    }));
+  };
+
+  changeToDirect = e => {
+    const { target } = e;
+    if (target.checked) {
+      this.setState(prevState => ({
+        params: { ...prevState.params, max_stopovers: "0" }
+      }));
+    } else {
+      this.setState(prevState => ({
+        params: { ...prevState.params, max_stopovers: "10" }
+      }));
+    }
+  };
 
   render() {
     return (
-      <div className="App">
+      <div className="App FlightContainer">
         <Navbar />
         <FlightFinder
           searchFunction={this.fetchFlights}
           changeSource={this.changeSource}
           changeDestination={this.changeDestination}
+          changeToDirect={this.changeToDirect}
         />
         {this.state.isLoading ? (
           <div>Loading</div>
@@ -66,8 +80,8 @@ class App extends Component {
           <FlightResultsTable results={this.state.flightResults} />
         )}
       </div>
-    )
+    );
   }
 }
 
-export default App
+export default App;
