@@ -8,13 +8,13 @@ class App extends Component {
   state = {
     flightResults: [],
     isLoading: false,
+    pagination: 5,
     params: {
       flyFrom: "PRG",
       to: "VLC",
       dateFrom: "06/07/2019",
       dateTo: "07/07/2019",
-      partner: "picky",
-      limit: "5"
+      partner: "picky"
     }
   };
   componentDidMount() {
@@ -53,15 +53,19 @@ class App extends Component {
 
   changeToDirect = e => {
     const { target } = e;
-    if (target.checked) {
-      this.setState(prevState => ({
-        params: { ...prevState.params, max_stopovers: "0" }
-      }));
-    } else {
-      this.setState(prevState => ({
-        params: { ...prevState.params, max_stopovers: "10" }
-      }));
-    }
+
+    this.setState(prevState => ({
+      params: {
+        ...prevState.params,
+        max_stopovers: target.checked ? "0" : "10"
+      }
+    }));
+  };
+
+  showNextPage = () => {
+    this.setState(prevState => ({
+      pagination: prevState.pagination + 5
+    }));
   };
 
   render() {
@@ -77,8 +81,17 @@ class App extends Component {
         {this.state.isLoading ? (
           <div>Loading</div>
         ) : (
-          <FlightResultsTable results={this.state.flightResults} />
+          <FlightResultsTable
+            results={this.state.flightResults}
+            pagination={this.state.pagination}
+          />
         )}
+        <button
+          onClick={this.showNextPage}
+          disabled={this.state.pagination >= this.state.flightResults.length}
+        >
+          Show more
+        </button>
       </div>
     );
   }
